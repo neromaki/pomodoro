@@ -1,0 +1,46 @@
+.page-header {
+    border-top: 5px solid $blue;
+    padding: 8px 0;
+    background: $offwhite;
+
+    .logo-badge {
+        margin-right: 20px;
+    }
+
+    img,
+    svg {
+        width: 60px;
+        height: 60px;
+        z-index: 1;
+        border-radius: 50%;
+    }
+
+    .heading {
+        display: uk-flex;
+        flex-direction: column;
+    }
+    h1 {
+        margin: 0;
+        font-family: 'Raleway', sans-serif;
+        line-height: 2rem;
+        font-weight: 600;
+    }
+    small {
+        font-family: 'Roboto';
+        padding-left: 2px;
+        color: rgba(0, 0, 0, .4);
+        letter-spacing: 3.5px;
+        display: block;
+    }
+
+    .uk-button {
+        padding: 8px 18px;
+    }
+    .uk-icon {
+        margin-right: 4px;
+        svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
+}
