@@ -1,0 +1,150 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:700);
+$pie-color: $blue-l;
+
+@mixin draw-progress-less-than-fifty($progress, $color) {
+    .pie {
+        .half-circle {
+            border-color: $color;
+        }
+
+        .left-side {
+            $rotate: $progress * 3.6;
+            transform: rotate(#{$rotate}deg);
+        }
+
+        .right-side {
+            display: none;
+        }
+    }
+}
+
+@mixin draw-progress-more-than-fifty($progress, $color) {
+    .pie {
+        clip: rect(auto, auto, auto, auto);
+
+        .half-circle {
+            border-color: $color;
+        }
+
+        .left-side {
+            $rotate: $progress * 3.6;
+            transform: rotate(#{$rotate}deg);
+        }
+
+        .right-side {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+@mixin draw-progress($progress, $color) {
+  .pie {
+    .half-circle {
+      border-color: $color;
+    }
+
+    .left-side {
+      $rotate: $progress * 3.6;
+      transform: rotate('${rotate}deg');
+    }
+  }
+}
+
+@mixin size($w, $h){
+  height: $h;
+  width: $w;
+}
+
+// --
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+
+.set-size {
+  font-size: 10em;
+}
+
+$size: 14em;
+
+.pie-wrapper {
+  @include size($size, $size);
+
+  margin: 0 auto;
+  position: relative;
+
+  &:nth-child(3n+1) {
+    clear: both;
+  }
+
+  .pie {
+    @include size(100%, 100%);
+    clip: rect(0, $size, $size, $size / 2);
+    left: 0;
+    position: absolute;
+    top: 0;
+
+    .half-circle {
+      @include size(100%, 100%);
+      border: $size / 10 solid $pie-color;
+      border-radius: 50%;
+      clip: rect(0, $size / 2, $size, 0);
+      left: 0;
+      position: absolute;
+      top: 0;
+    }
+  }
+
+  .label {
+    $font-size: $size / 4;
+    $font-size-redo: $size * 4;
+
+    cursor: default;
+    color: #7f8c8d;
+    display: block;
+    font-size: $font-size;
+    left: 50%;
+    line-height: $font-size;
+    position: absolute;
+    text-align: center;
+    top: 46%;
+    transform: translate(-50%, -50%);
+  }
+
+  .smaller {
+      color: #7f8c8d;
+    font-size: .75em;
+    padding-bottom: 20px;
+    left: 50%;
+    top: 71%;
+    width: 10em;
+    position: absolute;
+    text-align: center;
+    display: block;
+        transform: translate(-50%, -50%);
+  }
+
+  .shadow {
+    @include size(100%, 100%);
+    border: $size / 10 solid #d8dcde;
+    border-radius: 50%;
+  }
+}
+
+$percentage: 1;
+@while $percentage <= 50 {
+    .progress-#{$percentage} {
+        @include draw-progress-less-than-fifty($percentage, $pie-color);
+    }
+    $percentage: $percentage + 1;
+}
+
+$percentage: 51;
+@while $percentage <= 100 {
+    .progress-#{$percentage} {
+        @include draw-progress-more-than-fifty($percentage, $pie-color);
+    }
+    $percentage: $percentage + 1;
+}

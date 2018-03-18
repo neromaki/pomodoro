@@ -4,12 +4,13 @@
  */
 
 import VueRouter from 'vue-router';
+import Timer from '../components/Timer.vue';
 
 const routes = [
     {
-        name: 'example',
-        path: '/example',
-        // component: Dashboard,
+        name: 'timer',
+        path: '/',
+        component: Timer,
     },
 ];
 

@@ -6,8 +6,8 @@
 // Import Vue, axios for API access and the Vuex store
 import Vue from 'vue';
 import axios from 'axios';
-import store from './store';
 import Cookie from 'js-cookie';
+import store from './store';
 
 // Configure Vue's usage of axios
 Vue.use((v, a) => {
@@ -84,7 +84,7 @@ const actions = {
 
 
     UPDATE_USER_COOKIE({ commit }, payload) {
-        let userCookie = (typeof Cookie.get('userPrefs') !== 'undefined' ? Cookie.getJSON('userPrefs') : []);
+        const userCookie = (typeof Cookie.get('userPrefs') !== 'undefined' ? Cookie.getJSON('userPrefs') : []);
         userCookie.push('somedata');
         _.pull(userCookie, 'somedata');
     },

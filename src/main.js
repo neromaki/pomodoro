@@ -10,8 +10,8 @@ import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import 'promise-polyfill/src/polyfill';
 
-// Import Wrapper component that contains all other components in the app
-import Wrapper from './components/Wrapper.vue';
+// Import App component that contains all other components in the app
+import App from './components/App.vue';
 
 // Import app state, routes etc
 import router from './modules/routes';
@@ -43,8 +43,8 @@ const app = new Vue({
     router,
     el: '#app',
     components: {
-        Wrapper,
+        App,
     },
     methods: {},
-    render: h => h(Wrapper),
+    render: h => h(App),
 });
