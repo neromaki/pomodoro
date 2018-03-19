@@ -72,55 +72,6 @@ export default {
 <style lang="scss" scoped>
     $pie-color: red;
 
-    @mixin draw-progress-less-than-fifty($progress, $color) {
-        .pie {
-            .half-circle {
-                border-color: $color;
-            }
-
-            .left-side {
-                $rotate: $progress * 3.6;
-                transform: rotate(#{$rotate}deg);
-            }
-
-            .right-side {
-                display: none;
-            }
-        }
-    }
-
-    @mixin draw-progress-more-than-fifty($progress, $color) {
-        .pie {
-            clip: rect(auto, auto, auto, auto);
-
-            .half-circle {
-                border-color: $color;
-            }
-
-            .left-side {
-                $rotate: $progress * 3.6;
-                transform: rotate(#{$rotate}deg);
-            }
-
-            .right-side {
-                transform: rotate(180deg);
-            }
-        }
-    }
-
-    @mixin draw-progress($progress, $color) {
-      .pie {
-        .half-circle {
-          border-color: $color;
-        }
-
-        .left-side {
-          $rotate: $progress * 3.6;
-          transform: rotate('${rotate}deg');
-        }
-      }
-    }
-
     @mixin size($w, $h){
       height: $h;
       width: $w;
@@ -205,21 +156,5 @@ export default {
         border: $size / $progress-division solid #f7f8f8;
         border-radius: 50%;
       }
-    }
-
-    $percentage: 1;
-    @while $percentage <= 50 {
-        .progress-#{$percentage} {
-            @include draw-progress-less-than-fifty($percentage, $pie-color);
-        }
-        $percentage: $percentage + 1;
-    }
-
-    $percentage: 51;
-    @while $percentage <= 100 {
-        .progress-#{$percentage} {
-            @include draw-progress-more-than-fifty($percentage, $pie-color);
-        }
-        $percentage: $percentage + 1;
     }
 </style>
