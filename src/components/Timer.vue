@@ -1,9 +1,7 @@
 <template>
     <div>
-        Timer
-
         <div :class="['pie-wrapper']">
-          <span class="countdown">{{ this.timer }}</span>
+          <span class="countdown">{{ this.timer.output }}</span>
           <span class="smaller">pomodoro</span>
 
           <div class="pie" :style="progressStyle.pie">
@@ -11,6 +9,7 @@
             <div class="right-side half-circle" :style="progressStyle.right"></div>
           </div>
           <div class="shadow"></div>
+          <div class="overlay"></div>
         </div>
     </div>
 </template>
@@ -23,48 +22,59 @@ export default {
     components: {},
     data() {
         return {
-            timer: '00:00',
-            timerPercent: 0,
+            timer: {
+                duration: 0,
+                time: '',
+                output: '00:00',
+                percent: 0,
+            },
             progressStyle: {
                 pie: '',
                 left: '',
-                right: ''
+                right: '',
             },
         };
     },
     methods: {
         startTimer(duration) {
-            let timer = duration * 60;
+            this.timer.time = duration * 60;
+            this.timer.duration = duration;
             // eslint-disable-next-line
-            this.timer = duration + ":00";
-            const that = this;
+            this.timer.output = duration + ":00";
 
+            this.stepTimer();
             setInterval(() => {
-                let minutes = parseInt(timer / 60, 10);
-                let seconds = parseInt(timer % 60, 10);
-
-                // eslint-disable-next-line
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                // eslint-disable-next-line
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                // eslint-disable-next-line
-                if (--timer >= 0) {
-                    // eslint-disable-next-line
-                    that.timer = minutes + ":" + seconds;
-                    that.timerPercent = 100 - ((timer / (duration * 60)) * 100);
-
-                    that.progressStyle.pie = (this.timerPercent > 50 ? 'clip: rect(auto, auto, auto, auto);' : '');
-                    // eslint-disable-next-line
-                    that.progressStyle.left = 'transform: rotate('+ (this.timerPercent * 3.6) +'deg);';
-                    that.progressStyle.right = (this.timerPercent < 50 ? 'display: none;' : 'transform: rotate(180deg);');
-                }
+                this.stepTimer();
             }, 1000);
         },
+
+        stepTimer() {
+            let minutes = parseInt(this.timer.time / 60, 10);
+            let seconds = parseInt(this.timer.time % 60, 10);
+
+            // eslint-disable-next-line
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            // eslint-disable-next-line
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            // eslint-disable-next-line
+            if (this.timer.time >= 0) {
+                // eslint-disable-next-line
+                this.timer.output = minutes + ":" + seconds;
+                this.timer.percent = 100 - ((this.timer.time / (this.timer.duration * 60)) * 100);
+
+
+                this.progressStyle.pie = (this.timer.percent > 50 ? 'clip: rect(auto, auto, auto, auto);' : '');
+                // eslint-disable-next-line
+                this.progressStyle.left = 'transform: rotate('+ (this.timer.percent * 3.6) +'deg);';
+                this.progressStyle.right = (this.timer.percent < 50 ? 'display: none;' : 'transform: rotate(180deg);');
+                this.timer.time--;
+            }
+        }
     },
     created() {},
     mounted() {
-        this.startTimer(25);
+        this.startTimer(1);
     },
 };
 </script>
