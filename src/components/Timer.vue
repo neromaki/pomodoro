@@ -147,6 +147,13 @@ export default {
                 this.initTimer(next.duration);
                 this.startTimer();
                 this.timer.state = 'playing';
+            } else {
+                this.createSchedule();
+                const first = _.first(this.schedule);
+                this.timer.current = first;
+                this.initTimer(first.duration);
+                this.startTimer();
+                this.timer.state = 'playing';
             }
         },
 
@@ -158,7 +165,10 @@ export default {
         },
 
         createSchedule() {
-            this.schedule = [this.durations.pomodoro, this.durations.short_break];
+            this.schedule = [this.durations.pomodoro,
+                            this.durations.short_break,
+                            this.durations.pomodoro,
+                            this.durations.long_break];
         },
     },
     created() {
