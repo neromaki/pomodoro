@@ -64,7 +64,9 @@ export default {
             },
     },
     created() {
-        this.$store.dispatch('USER_DURATIONS_SET', this.durations);
+        if(!Cookie.get('user_durations')) {
+            this.$store.dispatch('USER_DURATIONS_SET', this.durations);
+        }
     },
     mounted() {
         this.$store.dispatch('USER_DURATIONS_GET');

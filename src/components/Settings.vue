@@ -3,7 +3,7 @@
         <div>
             <section class="settings__durations">
                 <h2>Customise timers</h2>
-                <div v-for="timer in durations">
+                <div v-for="timer in userDurations">
                     <div>
                         <label for="title-pomodoro">title</label>
                         <input type="text" id="title-pomodoro" v-model="timer.title" />
@@ -13,6 +13,7 @@
                         <input type="text" id="duration-pomodoro" v-model="timer.duration" />
                     </div>
                 </div>
+                <button type="button" name="save-durations" @click="saveUserDurations()">save</button>
             </section>
         </div>
     </div>
@@ -21,38 +22,27 @@
 <script>
 // TODO: why the fuck aren't I using vuex
 import Cookie from 'js-cookie';
+import { mapGetters } from 'vuex';
 import { Telegram } from '../modules/telegram';
 
 export default {
-    components: {},
+    computed: {
+        ...mapGetters({
+            durations: 'durations',
+        }),
+    },
     data() {
         return {
-            durations: {}
+            userDurations: {},
         };
     },
-
     methods: {
-        getUserDurations() {
-            const userDurations = Cookie.getJSON('user_durations');
-            console.log(userDurations);
-            _.each(userDurations, (object, key) => {
-                this.durations[key].title = object.title;
-                this.durations[key].duration = object.duration;
-            });
-        },
-
-        setUserDurations(durations) {
-            const userDurations = {};
-            _.each(durations, (object, key) => {
-                userDurations[key] = object;
-            });
-
-            Cookie.set('user_durations', userDurations);
-        },
+        saveUserDurations() {
+            this.$store.dispatch('USER_DURATIONS_SET', this.userDurations);
+        }
     },
     created() {
-        this.setUserDurations(this.durations);
-        this.getUserDurations(this.durations);
+        this.userDurations = this.durations;
     },
     mounted() {},
 };

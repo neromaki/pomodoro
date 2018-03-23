@@ -60,9 +60,11 @@ const mutations = {
     USER_DURATIONS_SET(store, payload) {
         const userDurations = {};
         _.each(payload, (object, key) => {
+            // console.log(`${key} = ${object.duration}`);
             userDurations[key] = object;
+            store.durations[key].title = object.title;
+            store.durations[key].duration = object.duration;
         });
-
         Cookie.set('user_durations', userDurations);
     },
 
@@ -71,7 +73,6 @@ const mutations = {
         _.each(payload, (preference, key) => {
             userPreferences[key] = preference.value;
         });
-
         Cookie.set('user_preferences', userPreferences);
     },
 
