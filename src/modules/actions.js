@@ -32,6 +32,7 @@ const actions = {
         });
 
         store.dispatch("TIMER_STEP");
+        commit('TIMER_CLEAR');
         store.state.timer.timer = setInterval(() => {
             store.dispatch("TIMER_STEP");
         }, 1000);
