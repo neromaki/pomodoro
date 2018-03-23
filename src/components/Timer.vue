@@ -32,8 +32,11 @@
 </template>
 
 <script>
+// TODO: refactor the fuck outta this
+
 // import { mapGetters } from 'vuex';
 // import { Telegram } from '../modules/telegram';
+import Cookie from 'js-cookie';
 
 export default {
     components: {},
@@ -56,19 +59,15 @@ export default {
             durations: {
                 pomodoro: {
                     title: 'pomodoro',
-                    duration: 5,
+                    duration: 2,
                 },
                 short_break: {
                     title: 'short break',
-                    duration: 5 * 60,
+                    duration: 1,
                 },
                 long_break: {
                     title: 'long break',
-                    duration: 15 * 60,
-                },
-                transition: {
-                    title: 'transition',
-                    duration: 2 * 60,
+                    duration: 3,
                 },
             },
             schedule: [],
@@ -165,16 +164,60 @@ export default {
         },
 
         createSchedule() {
-            this.schedule = [this.durations.pomodoro,
-                            this.durations.short_break,
-                            this.durations.pomodoro,
-                            this.durations.long_break];
+            // Default schedule
+            this.schedule = [
+                this.durations.pomodoro,
+                this.durations.short_break,
+                this.durations.pomodoro,
+                this.durations.short_break,
+                this.durations.pomodoro,
+                this.durations.long_break,
+            ];
         },
+
+        getUserDurations() {
+            const userDurations = Cookie.getJSON('user_durations');
+            _.each(userDurations, (object, key) => {
+                this.durations[key].title = object.title;
+                this.durations[key].duration = object.duration;
+            });
+        },
+
+        setUserDurations(durations) {
+            const userDurations = {};
+            _.each(durations, (object, key) => {
+                userDurations[key] = object;
+            });
+
+            Cookie.set('user_durations', userDurations);
+        },
+
+        setUserPreferences(preferences) {
+            const userPreferences = {};
+            _.each(preferences, (preference, key) => {
+                userPreferences[key] = preference.value;
+            });
+
+            Cookie.set('user_preferences', userPreferences);
+        },
+
+        /*
+        // TODO: implement custom schedule schemes
+        updateUserSchedule(schedule) {
+            // Cookie.get('userPrefs')
+            Cookie.set('schedule', schedule);
+            console.log(Cookie.getJSON('schedule'));
+        },
+        */
     },
     created() {
-        this.createSchedule();
+        // this.createSchedule();
+        // this.updateUserSchedule(this.schedule);
+        this.setUserDurations(this.durations);
     },
     mounted() {
+        this.getUserDurations();
+        this.createSchedule();
         const first = _.first(this.schedule);
         this.timer.current = first;
         this.initTimer(first.duration);
