@@ -87,6 +87,7 @@ const actions = {
     },
 
     TIMER_NEXT({ commit }) {
+        store.dispatch('PLAY_SOUND');
         commit('TIMER_CLEAR');
         commit('SCHEDULE_PULL');
         const next = _.first(store.state.schedule);
@@ -125,6 +126,12 @@ const actions = {
 
     USER_PREFERENCES_SET({ commit }, payload) {
         commit('USER_PREFERENCES_SET', payload);
+    },
+
+    PLAY_SOUND({ commit }) {
+        const audio = new Audio(require('../assets/glass-bell.mp3'));
+        audio.volume = 0.75;
+        audio.play();
     },
 };
 
