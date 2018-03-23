@@ -5,30 +5,76 @@
 
 // Import Vue and requirements
 import Cookie from 'js-cookie';
-import state from './state';
+// import state from './state';
 
 const mutations = {
     // APP
-    SET_APP_LOADING(store, payload) {
-        state.app.loading = payload;
+    TIMER_INIT(store) {
+        store.timer.duration = 0;
+        store.timer.time = '';
+        store.timer.output = '00:00';
+        store.timer.percent = 0;
+        store.timer.state = 'stopped';
+        store.timer.timer = '';
     },
 
-    // AUTH
-    SET_USER(store, payload) {
-        state.user = payload.user;
-        state.token = payload.token;
-        Cookie.set('user', payload.user);
-        Cookie.set('token', payload.token, {
-            expires: payload.remember ? 365 : null,
+    TIMER_UPDATE(store, payload) {
+        _.each(payload, (value, key) => {
+            store.timer[key] = value;
         });
     },
 
-    UNSET_USER() {
-        state.user = null;
-        state.token = null;
-        Cookie.remove('token');
-        Cookie.remove('user');
+    TIMER_CLEAR(store, payload) {
+        window.clearInterval(store.timer.timer);
     },
+    TIMER_UPDATE_STYLE(store) {
+        store.progressStyle.pie = (store.timer.percent > 50 ? 'clip: rect(auto, auto, auto, auto);' : '');
+        // eslint-disable-next-line
+        store.progressStyle.left = 'transform: rotate('+ (store.timer.percent * 3.6) +'deg);';
+        store.progressStyle.right = (store.timer.percent < 50 ? 'display: none;' : 'transform: rotate(180deg);');
+    },
+
+    SCHEDULE_CREATE(store) {
+        store.schedule = [
+            store.durations.pomodoro,
+            store.durations.short_break,
+            store.durations.pomodoro,
+            store.durations.short_break,
+            store.durations.pomodoro,
+            store.durations.long_break,
+        ];
+    },
+
+    SCHEDULE_PULL(store) {
+        _.pullAt(store.schedule, 0);
+    },
+
+    USER_DURATIONS_GET(store) {
+        const userDurations = Cookie.getJSON('user_durations');
+        _.each(userDurations, (object, key) => {
+            store.durations[key].title = object.title;
+            store.durations[key].duration = object.duration;
+        });
+    },
+
+    USER_DURATIONS_SET(store, payload) {
+        const userDurations = {};
+        _.each(payload, (object, key) => {
+            userDurations[key] = object;
+        });
+
+        Cookie.set('user_durations', userDurations);
+    },
+
+    USER_PREFERENCES_SET(store, payload) {
+        const userPreferences = {};
+        _.each(payload, (preference, key) => {
+            userPreferences[key] = preference.value;
+        });
+
+        Cookie.set('user_preferences', userPreferences);
+    },
+
 };
 
 export default mutations;

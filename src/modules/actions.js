@@ -3,90 +3,127 @@
  * Contains all the Vuex actions for the app
  */
 
-// Import Vue, axios for API access and the Vuex store
-import Vue from 'vue';
-import axios from 'axios';
-import Cookie from 'js-cookie';
+// import Cookie from 'js-cookie';
 import store from './store';
-
-// Configure Vue's usage of axios
-Vue.use((v, a) => {
-    v.axios = a;
-    Object.defineProperties(v.prototype, {
-        axios: {
-            get() {
-                return a;
-            },
-        },
-        $http: {
-            get() {
-                return a;
-            },
-        },
-    });
-}, axios);
-
-// Set headers required by Laravel to request resources
-Vue.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-Vue.axios.defaults.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]');
-
-/* eslint-disable comma-dangle */
-// If the user has auth'd, set the Authorization Bearer header to the JSON Webtoken value for API validation
-Vue.axios.interceptors.request.use(
-    (config) => {
-        if (store.getters.authToken) {
-            config.headers.common.Authorization = `Bearer ${store.getters.authToken}`;
-        }
-        return config;
-    },
-    error => Promise.reject(error)
-);
-
 
 // All of the app's actions
 const actions = {
-    // AUTH
-    AUTH_LOGIN({ commit }, credentials) {
-        commit('SET_APP_LOADING', true);
-        return new Promise((resolve, reject) => {
-            Vue.axios.post('/api/auth/login', credentials)
-                .then((r) => {
-                    if (r.data.status === 'ok') {
-                        const { token } = r.data;
-                        commit('SET_USER', {
-                            user: credentials.email,
-                            token,
-                            remember: null,
-                        });
-                        commit('SET_APP_LOADING', false);
-                        resolve(r);
-                        return;
-                    }
-                    commit('UNSET_USER');
-                    commit('SET_APP_LOADING', false);
-                    reject(r);
-                })
-                .catch((e) => {
-                    const r = e.response;
+    TIMER_INIT({ commit }, duration) {
+        commit('TIMER_INIT');
 
-                    if (r.status !== 'ok') {
-                        commit('UNSET_USER');
-                        commit('SET_APP_LOADING', false);
-                        reject(r.data);
-                    }
-                });
+        let minutes = parseInt(store.state.timer.time / 60, 10);
+        let seconds = parseInt(store.state.timer.time % 60, 10);
+        // eslint-disable-next-line
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        // eslint-disable-next-line
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        commit('TIMER_UPDATE', {
+            time: Math.round(duration),
+            duration: Math.round(duration),
+            output: `${minutes}:${seconds}`,
         });
+        commit('TIMER_UPDATE_STYLE');
     },
 
-    AUTH_LOGOUT({ commit }, router) {
-        commit('UNSET_USER');
+    TIMER_START({ commit }) {
+        commit('TIMER_UPDATE', {
+            state: 'playing',
+        });
+
+        store.dispatch("TIMER_STEP");
+        store.state.timer.timer = setInterval(() => {
+            store.dispatch("TIMER_STEP");
+        }, 1000);
     },
 
+    TIMER_STOP({ commit }) {
+        commit('TIMER_UPDATE', {
+            state: 'paused',
+        });
+        commit('TIMER_CLEAR');
+    },
 
-    UPDATE_USER_COOKIE({ commit }, payload) {
-        const userCookie = (typeof Cookie.get('userPrefs') !== 'undefined' ? Cookie.getJSON('userPrefs') : []);
-        userCookie.push('somedata');
-        _.pull(userCookie, 'somedata');
+    TIMER_RESET({ commit }) {
+        commit('TIMER_UPDATE', {
+            state: 'stopped',
+        });
+        commit('TIMER_CLEAR');
+        store.dispatch('SCHEDULE_CREATE');
+        const first = _.first(store.state.schedule);
+        store.dispatch('TIMER_INIT', first.duration);
+    },
+
+    TIMER_UPDATE({ commit }, payload) {
+        commit('TIMER_UPDATE', payload);
+    },
+
+    TIMER_STEP({ commit }) {
+        let minutes = parseInt(store.state.timer.time / 60, 10);
+        let seconds = parseInt(store.state.timer.time % 60, 10);
+
+        // eslint-disable-next-line
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        // eslint-disable-next-line
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        // eslint-disable-next-line
+        if (store.state.timer.time >= 0) {
+            commit('TIMER_UPDATE', {
+                // eslint-disable-next-line
+                output:  minutes + ":" + seconds,
+                percent: 100 - ((store.state.timer.time / (store.state.timer.duration)) * 100),
+                // eslint-disable-next-line
+                output:  minutes + ":" + seconds,
+            });
+            commit('TIMER_UPDATE_STYLE');
+            commit('TIMER_UPDATE', {
+                time: store.state.timer.time - 1,
+            });
+        } else if (store.state.timer.time <= 0) {
+            store.dispatch('TIMER_NEXT');
+        }
+    },
+
+    TIMER_NEXT({ commit }) {
+        commit('TIMER_CLEAR');
+        commit('SCHEDULE_PULL');
+        const next = _.first(store.state.schedule);
+        if (next) {
+            commit('TIMER_UPDATE', {
+                current: next,
+            });
+            store.dispatch('TIMER_INIT', next.duration);
+            store.dispatch('TIMER_START');
+            commit('TIMER_UPDATE', {
+                state: 'playing',
+            });
+        } else {
+            commit('SCHEDULE_CREATE');
+            const first = _.first(store.state.schedule);
+            store.dispatch('TIMER_INIT', first.duration);
+            store.dispatch('TIMER_START');
+            commit('TIMER_UPDATE', {
+                current: first,
+                state: 'playing',
+            });
+        }
+    },
+
+    SCHEDULE_CREATE({ commit }) {
+        commit('SCHEDULE_CREATE');
+    },
+
+    USER_DURATIONS_GET({ commit }) {
+        commit('USER_DURATIONS_GET');
+    },
+
+    USER_DURATIONS_SET({ commit }, payload) {
+        commit('USER_DURATIONS_SET', payload);
+    },
+
+    USER_PREFERENCES_SET({ commit }, payload) {
+        commit('USER_PREFERENCES_SET', payload);
     },
 };
 

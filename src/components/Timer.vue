@@ -32,195 +32,48 @@
 </template>
 
 <script>
-// TODO: refactor the fuck outta this
-
-// import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 // import { Telegram } from '../modules/telegram';
 import Cookie from 'js-cookie';
 
 export default {
     components: {},
     data() {
-        return {
-            timer: {
-                duration: 0,
-                time: '',
-                output: '00:00',
-                percent: 0,
-                state: 'stopped',
-                timer: '',
-                current: '',
-            },
-            progressStyle: {
-                pie: '',
-                left: '',
-                right: '',
-            },
-            durations: {
-                pomodoro: {
-                    title: 'pomodoro',
-                    duration: 2,
-                },
-                short_break: {
-                    title: 'short break',
-                    duration: 1,
-                },
-                long_break: {
-                    title: 'long break',
-                    duration: 3,
-                },
-            },
-            schedule: [],
-        };
+        return {}
+    },
+    computed: {
+        ...mapGetters({
+            timer: 'timer',
+            durations: 'durations',
+            schedule: 'schedule',
+            progressStyle: 'progressStyle',
+        }),
     },
     methods: {
-        initTimer(duration) {
-            this.timer.duration = 0;
-            this.timer.time = '';
-            this.timer.output = '00:00';
-            this.timer.percent = 0;
-            this.timer.state = 'stopped';
-            this.timer.timer = '';
 
-            this.timer.time = Math.round(duration);
-            this.timer.duration = Math.round(duration);
-            let minutes = parseInt(this.timer.time / 60, 10);
-            let seconds = parseInt(this.timer.time % 60, 10);
-            // eslint-disable-next-line
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            // eslint-disable-next-line
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            // eslint-disable-next-line
-            this.timer.output = minutes + ":" + seconds;
-            this.updateTimerStyle();
-        },
+            startTimer() {
+                this.$store.dispatch('TIMER_START');
+            },
 
-        startTimer() {
-            this.timer.state = 'playing';
-            this.stepTimer();
-            this.timer.timer = setInterval(() => {
-                this.stepTimer();
-            }, 1000);
-        },
+            stopTimer() {
+                this.$store.dispatch('TIMER_STOP');
+            },
 
-        stopTimer() {
-            this.timer.state = 'paused';
-            window.clearInterval(this.timer.timer);
-        },
-
-        resetTimer() {
-            this.timer.state = 'stopped';
-            window.clearInterval(this.timer.timer);
-            this.createSchedule();
-            const first = _.first(this.schedule);
-            this.initTimer(first.duration);
-        },
-
-        stepTimer() {
-            let minutes = parseInt(this.timer.time / 60, 10);
-            let seconds = parseInt(this.timer.time % 60, 10);
-
-            // eslint-disable-next-line
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            // eslint-disable-next-line
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-
-            // eslint-disable-next-line
-            if (this.timer.time >= 0) {
-                // eslint-disable-next-line
-                this.timer.output = minutes + ":" + seconds;
-                this.timer.percent = 100 - ((this.timer.time / (this.timer.duration)) * 100);
-                this.updateTimerStyle();
-                this.timer.time = this.timer.time - 1;
-            } else if (this.timer.time <= 0) {
-                this.nextTimer();
-            }
-        },
-
-        nextTimer() {
-            window.clearInterval(this.timer.timer);
-            _.pullAt(this.schedule, 0);
-            const next = _.first(this.schedule);
-            if (next) {
-                this.timer.current = next;
-                this.initTimer(next.duration);
-                this.startTimer();
-                this.timer.state = 'playing';
-            } else {
-                this.createSchedule();
-                const first = _.first(this.schedule);
-                this.timer.current = first;
-                this.initTimer(first.duration);
-                this.startTimer();
-                this.timer.state = 'playing';
-            }
-        },
-
-        updateTimerStyle() {
-            this.progressStyle.pie = (this.timer.percent > 50 ? 'clip: rect(auto, auto, auto, auto);' : '');
-            // eslint-disable-next-line
-            this.progressStyle.left = 'transform: rotate('+ (this.timer.percent * 3.6) +'deg);';
-            this.progressStyle.right = (this.timer.percent < 50 ? 'display: none;' : 'transform: rotate(180deg);');
-        },
-
-        createSchedule() {
-            // Default schedule
-            this.schedule = [
-                this.durations.pomodoro,
-                this.durations.short_break,
-                this.durations.pomodoro,
-                this.durations.short_break,
-                this.durations.pomodoro,
-                this.durations.long_break,
-            ];
-        },
-
-        getUserDurations() {
-            const userDurations = Cookie.getJSON('user_durations');
-            _.each(userDurations, (object, key) => {
-                this.durations[key].title = object.title;
-                this.durations[key].duration = object.duration;
-            });
-        },
-
-        setUserDurations(durations) {
-            const userDurations = {};
-            _.each(durations, (object, key) => {
-                userDurations[key] = object;
-            });
-
-            Cookie.set('user_durations', userDurations);
-        },
-
-        setUserPreferences(preferences) {
-            const userPreferences = {};
-            _.each(preferences, (preference, key) => {
-                userPreferences[key] = preference.value;
-            });
-
-            Cookie.set('user_preferences', userPreferences);
-        },
-
-        /*
-        // TODO: implement custom schedule schemes
-        updateUserSchedule(schedule) {
-            // Cookie.get('userPrefs')
-            Cookie.set('schedule', schedule);
-            console.log(Cookie.getJSON('schedule'));
-        },
-        */
+            resetTimer() {
+                this.$store.dispatch('TIMER_RESET');
+            },
     },
     created() {
-        // this.createSchedule();
-        // this.updateUserSchedule(this.schedule);
-        this.setUserDurations(this.durations);
+        this.$store.dispatch('USER_DURATIONS_SET', this.durations);
     },
     mounted() {
-        this.getUserDurations();
-        this.createSchedule();
+        this.$store.dispatch('USER_DURATIONS_GET');
+        this.$store.dispatch('SCHEDULE_CREATE');
         const first = _.first(this.schedule);
-        this.timer.current = first;
-        this.initTimer(first.duration);
+        this.$store.dispatch('TIMER_UPDATE', {
+            current: first,
+        });
+        this.$store.dispatch('TIMER_INIT', first.duration);
     },
 };
 </script>

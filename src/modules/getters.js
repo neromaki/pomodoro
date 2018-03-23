@@ -5,11 +5,11 @@
  */
 
 const getters = {
-
-    // AUTH
-    authUser: s => s.user,
-    authToken: s => s.token,
-    authCheck: s => !!s.user,
+    appLoading: s => s.app.loading,
+    timer: s => s.timer,
+    durations: s => s.durations,
+    schedule: s => s.schedule,
+    progressStyle: s => s.progressStyle,
 };
 
 export default getters;
