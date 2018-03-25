@@ -6,6 +6,7 @@
 const state = {
     app: {
         loading: false,
+        modal: true,
     },
     timer: {
         duration: 0,
@@ -24,15 +25,18 @@ const state = {
     durations: {
         pomodoro: {
             title: 'pomodoro',
-            duration: 2,
+            duration: 0,
+            default: 5,
         },
         short_break: {
             title: 'short break',
-            duration: 1,
+            duration: 0,
+            default: 10,
         },
         long_break: {
             title: 'long break',
-            duration: 3,
+            duration: 0,
+            default: 20,
         },
     },
     schedule: [],

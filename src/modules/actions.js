@@ -8,7 +8,14 @@ import store from './store';
 
 // All of the app's actions
 const actions = {
-    TIMER_INIT({ commit }, duration) {
+    TIMER_INIT({ commit }) {
+        store.dispatch('USER_DURATIONS_GET');
+        store.dispatch('SCHEDULE_CREATE');
+        const first = _.first(store.state.schedule);
+        const { duration } = first;
+        commit('TIMER_UPDATE', {
+            current: first,
+        });
         commit('TIMER_INIT');
 
         let minutes = parseInt(store.state.timer.time / 60, 10);
@@ -124,6 +131,10 @@ const actions = {
         commit('USER_DURATIONS_SET', payload);
     },
 
+    USER_DURATIONS_RESET({ commit }) {
+        commit('USER_DURATIONS_RESET');
+    },
+
     USER_PREFERENCES_SET({ commit }, payload) {
         commit('USER_PREFERENCES_SET', payload);
     },
@@ -132,6 +143,10 @@ const actions = {
         const audio = new Audio(require('../assets/glass-bell.mp3'));
         audio.volume = 0.75;
         audio.play();
+    },
+
+    MODAL_TOGGLE({ commit }) {
+        commit('MODAL_TOGGLE');
     },
 };
 

@@ -69,13 +69,7 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch('USER_DURATIONS_GET');
-        this.$store.dispatch('SCHEDULE_CREATE');
-        const first = _.first(this.schedule);
-        this.$store.dispatch('TIMER_UPDATE', {
-            current: first,
-        });
-        this.$store.dispatch('TIMER_INIT', first.duration);
+        this.$store.dispatch('TIMER_INIT');
     },
 };
 </script>

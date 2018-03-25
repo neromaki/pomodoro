@@ -27,24 +27,27 @@
 <script>
 // import { mapGetters } from 'vuex';
 import 'promise-polyfill/src/polyfill';
+import { mapGetters } from 'vuex';
 import { Telegram } from '../modules/telegram';
 import Timer from './Timer.vue';
 import Settings from './Settings.vue';
 
 export default {
-
+    computed: {
+        ...mapGetters({
+            modal: 'appModal',
+        }),
+    },
     components: {
         Timer,
         Settings,
     },
     data() {
-        return {
-            modal: true
-        };
+        return {};
     },
     methods: {
         toggleSettings() {
-            this.modal = !this.modal;
+            this.$store.dispatch('MODAL_TOGGLE');
         },
     },
     created() {},

@@ -6,6 +6,7 @@
 
 const getters = {
     appLoading: s => s.app.loading,
+    appModal: s => s.app.modal,
     timer: s => s.timer,
     durations: s => s.durations,
     schedule: s => s.schedule,

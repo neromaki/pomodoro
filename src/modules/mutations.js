@@ -60,12 +60,20 @@ const mutations = {
     USER_DURATIONS_SET(store, payload) {
         const userDurations = {};
         _.each(payload, (object, key) => {
-            // console.log(`${key} = ${object.duration}`);
             userDurations[key] = object;
             store.durations[key].title = object.title;
             store.durations[key].duration = object.duration;
         });
         Cookie.set('user_durations', userDurations);
+    },
+
+    USER_DURATIONS_RESET(store) {
+        const defaultDurations = {};
+        _.each(store.durations, (object, key) => {
+            defaultDurations[key] = object;
+            store.durations[key].duration = store.durations[key].default;
+        });
+        Cookie.set('user_durations', defaultDurations);
     },
 
     USER_PREFERENCES_SET(store, payload) {
@@ -76,6 +84,9 @@ const mutations = {
         Cookie.set('user_preferences', userPreferences);
     },
 
+    MODAL_TOGGLE(store) {
+        store.app.modal = !store.app.modal;
+    },
 };
 
 export default mutations;
