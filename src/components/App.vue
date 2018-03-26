@@ -3,7 +3,7 @@
         <header>
             <div class="brand">
                 <img src="../assets/images/pomodoro-tomato.svg" class="logo" alt="Pomodoro logo" />
-                <h1>pomodoro</h1>
+                <!-- <h1>pomodoro</h1> -->
             </div>
 
             <button class="toggle-settings" @click="toggleSettings()">
@@ -55,13 +55,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     header {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        padding: 10px 20px;
+        background: white;
+        border-top: 4px solid #dc775e;
+        z-index: 5;
+
         @media(min-width: 1200px) {
-            padding: 0 20px;
+            padding: 10px 30px;
         }
         .logo {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
         }
 
         .brand {
@@ -76,6 +94,28 @@ export default {
             margin-left: 15px;
             position: relative;
             top: -4px;
+        }
+
+        .toggle-settings {
+            background: none;
+            border: none;
+            cursor: pointer;
+            svg {
+                transition: transform ease-out .15s;
+                fill: lighten(black, 15%);
+            }
+
+            &:hover,
+            &:focus
+            &:active {
+                background: none;
+                border: none;
+                outline: none;
+
+                svg {
+                    transform: rotateZ(90deg);
+                }
+            }
         }
     }
 </style>

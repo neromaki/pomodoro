@@ -9,6 +9,7 @@
             <div class="right-side half-circle" :style="progressStyle.right"></div>
           </div>
           <div class="shadow"></div>
+          <div class="pie-background"></div>
           <div class="overlay" :class="timer.state">
 
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" class="controls play" v-if="timer.state == 'paused' || timer.state == 'stopped'" @click="startTimer()">
@@ -98,6 +99,8 @@ export default {
 
       margin: 0 auto;
       position: relative;
+      // border-radius: 50%;
+      // background: white;
 
       &:nth-child(3n+1) {
         clear: both;
@@ -137,6 +140,7 @@ export default {
         text-align: center;
         top: 46%;
         transform: translate(-50%, -50%);
+        z-index: 1;
       }
 
       .smaller {
@@ -151,13 +155,25 @@ export default {
         text-align: center;
         display: block;
         transform: translate(-50%, -50%);
+        z-index: 1;
       }
 
       .shadow {
         @include size(100%, 100%);
-        border: $size / $progress-division solid #f7f8f8;
+        border: $size / $progress-division solid rgba(247, 248, 248, .5);
         border-radius: 50%;
       }
+
+      .pie-background {
+        height: calc(100% - 2.4em);
+        width: calc(100% - 2.4em);
+        border-radius: 50%;
+        position: absolute;
+        top: 1.2em;
+        left: 1.2em;
+        background: rgba(255, 255, 255, .95);
+        z-index: 0;
+    }
 
       .overlay {
         height: calc(100% - 2.4em);
@@ -168,6 +184,7 @@ export default {
         left: 1.2em;
         background: rgba(0, 0, 0, .5);
         transition: background ease-in-out .1s;
+        z-index: 2;
 
         &:hover {
             background: rgba(0, 0, 0, .4);

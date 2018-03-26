@@ -6,7 +6,7 @@
 const state = {
     app: {
         loading: false,
-        modal: true,
+        modal: false,
     },
     timer: {
         duration: 0,

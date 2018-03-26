@@ -13,6 +13,21 @@
       <style media="screen">
           html {
               font-family: Lato, sans-serif;
+              /* height: 100%; */
+          }
+          body,
+          main,
+          body > div {
+              /* height: calc(100% - 75px); */
+          }
+          body {
+              margin: 0;
+              background: linear-gradient(to right, #5b9ec1 0%, #6cc1d6 100%);
+              padding-top: 75px;
+              min-height: 100%;
+          }
+          main {
+
           }
           h1, h2, h3, h4, h5, h6 {
               font-family: Raleway, serif;
@@ -23,5 +38,22 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script type="text/javascript">
+        function resize()
+        {
+            const height = window.innerHeight;
+            const elementHeight = height -75 + "px";
+            let elements = document.querySelectorAll('html, body, main, body > div');
+            for(let i = 0; i < elements.length; i++) {
+                elements[i].style.height = elementHeight;
+            }
+        }
+        window.onresize = function() {
+            resize();
+        };
+        window.onload = function() {
+            resize();    
+        };
+    </script>
   </body>
 </html>

@@ -147,6 +147,7 @@ const actions = {
     },
 
     MODAL_TOGGLE({ commit }) {
+        store.dispatch('TIMER_STOP');
         commit('MODAL_TOGGLE');
     },
 };
