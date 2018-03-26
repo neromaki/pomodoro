@@ -7,15 +7,16 @@
                     <label>title</label>
                     <label>duration</label>
                 </div>
-                <div v-for="timer in userDurations">
-                    <input type="text" id="title-pomodoro" v-model="timer.title" />
+                <div class="settings__durations__list" v-for="(timer, key) in userDurations">
+                    <input type="text" id="title" v-model="timer.title" />
                     <div>
-                        <input type="text" id="duration-pomodoro" v-model="timer.duration" />
+                        <input type="number" class="duration--minutes" v-model="timer.minutes" />
+                        <input type="number" class="duration--seconds" v-model="timer.seconds" max="59" @blur="validateSeconds(key)" />
                     </div>
                 </div>
                 <div>
                     <button type="button" name="save-durations" @click="saveUserDurations()">save</button>
-                    <a href="#" @click="resetDurations($event   )">reset to defaults</a>
+                    <a href="#" @click="resetDurations($event)">reset to defaults</a>
                 </div>
             </section>
         </div>
@@ -24,10 +25,8 @@
 </template>
 
 <script>
-// TODO: why the fuck aren't I using vuex
-import Cookie from 'js-cookie';
 import { mapGetters } from 'vuex';
-import { Telegram } from '../modules/telegram';
+// import { Telegram } from '../modules/telegram';
 
 export default {
     computed: {
@@ -43,24 +42,31 @@ export default {
     },
     methods: {
         saveUserDurations() {
-            this.$store.dispatch('USER_DURATIONS_SET', this.userDurations)
-            .then((r) => {
-                this.$store.dispatch('SCHEDULE_CREATE');
-                this.$store.dispatch('TIMER_INIT');
-                this.$store.dispatch('MODAL_TOGGLE');
-            })
-            .catch((e) => {
-                // TODO: add fail condition
+            _.each(this.userDurations, (timer) => {
+                timer.duration = (timer.minutes * 60) + timer.seconds;
             });
+            this.$store.dispatch('USER_DURATIONS_SET', this.userDurations)
+                .then((r) => {
+                    this.$store.dispatch('SCHEDULE_CREATE');
+                    this.$store.dispatch('TIMER_INIT');
+                    this.$store.dispatch('MODAL_TOGGLE');
+                })
+                .catch((e) => {
+                    // TODO: add fail condition
+                });
         },
         resetDurations(e) {
             e.preventDefault();
             this.$store.dispatch('USER_DURATIONS_RESET')
-            .then((r) => {
-                this.$store.dispatch('SCHEDULE_CREATE');
-                this.$store.dispatch('TIMER_INIT');
-                this.$store.dispatch('MODAL_TOGGLE');
-            })
+                .then((r) => {
+                    this.$store.dispatch('SCHEDULE_CREATE');
+                    this.$store.dispatch('TIMER_INIT');
+                    this.$store.dispatch('MODAL_TOGGLE');
+                });
+        },
+        validateSeconds(key) {
+            console.log(this.userDurations[key].seconds, this.userDurations[key].seconds > 59);
+            this.userDurations[key].seconds = (this.userDurations[key].seconds > 59 ? "59" : this.userDurations[key].seconds);
         },
         toggleModal() {
             this.$store.dispatch('MODAL_TOGGLE');
@@ -68,6 +74,12 @@ export default {
     },
     created() {
         this.userDurations = this.durations;
+        _.each(this.userDurations, (object) => {
+            const minutes = parseInt(object.duration / 60, 10);
+            const seconds = parseInt(object.duration % 60, 10);
+            object.minutes = minutes < 10 ? `0${minutes}` : minutes;
+            object.seconds = seconds < 10 ? `0${seconds}` : seconds;
+        });
     },
     mounted() {},
 };
@@ -90,19 +102,30 @@ export default {
         }
 
         section {
+            h1,
+            h2 {
+                margin-top: 0;
+            }
+
             &.settings__durations {
                 > div {
                     display: flex;
 
-                    &:first-child,
+                    &:nth-child(2),
                     &:last-child {
                         justify-content: space-between;
                     }
 
                     > div {
                         display: flex;
-                        flex-direction: column;
                     }
+                }
+            }
+
+            .settings__durations__list {
+                .duration--minutes,
+                .duration--seconds {
+                    width: 30px;
                 }
             }
         }

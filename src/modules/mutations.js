@@ -71,7 +71,7 @@ const mutations = {
         const defaultDurations = {};
         _.each(store.durations, (object, key) => {
             defaultDurations[key] = object;
-            store.durations[key].duration = store.durations[key].default;
+            store.durations[key].duration = (store.durations[key].minutes * 60) + store.durations[key].seconds;
         });
         Cookie.set('user_durations', defaultDurations);
     },

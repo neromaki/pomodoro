@@ -39,7 +39,7 @@ import Cookie from 'js-cookie';
 export default {
     components: {},
     data() {
-        return {}
+        return {};
     },
     computed: {
         ...mapGetters({
@@ -50,21 +50,20 @@ export default {
         }),
     },
     methods: {
+        startTimer() {
+            this.$store.dispatch('TIMER_START');
+        },
 
-            startTimer() {
-                this.$store.dispatch('TIMER_START');
-            },
+        stopTimer() {
+            this.$store.dispatch('TIMER_STOP');
+        },
 
-            stopTimer() {
-                this.$store.dispatch('TIMER_STOP');
-            },
-
-            resetTimer() {
-                this.$store.dispatch('TIMER_RESET');
-            },
+        resetTimer() {
+            this.$store.dispatch('TIMER_RESET');
+        },
     },
     created() {
-        if(!Cookie.get('user_durations')) {
+        if (!Cookie.get('user_durations')) {
             this.$store.dispatch('USER_DURATIONS_SET', this.durations);
         }
     },

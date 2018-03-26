@@ -140,6 +140,7 @@ const actions = {
     },
 
     PLAY_SOUND({ commit }) {
+        // eslint-disable-next-line
         const audio = new Audio(require('../assets/glass-bell.mp3'));
         audio.volume = 0.75;
         audio.play();

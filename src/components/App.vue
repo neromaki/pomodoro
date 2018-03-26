@@ -28,7 +28,7 @@
 // import { mapGetters } from 'vuex';
 import 'promise-polyfill/src/polyfill';
 import { mapGetters } from 'vuex';
-import { Telegram } from '../modules/telegram';
+// import { Telegram } from '../modules/telegram';
 import Timer from './Timer.vue';
 import Settings from './Settings.vue';
 

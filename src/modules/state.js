@@ -26,17 +26,20 @@ const state = {
         pomodoro: {
             title: 'pomodoro',
             duration: 0,
-            default: 5,
+            minutes: 0,
+            seconds: 8,
         },
         short_break: {
             title: 'short break',
             duration: 0,
-            default: 10,
+            minutes: 0,
+            seconds: 3,
         },
         long_break: {
             title: 'long break',
             duration: 0,
-            default: 20,
+            minutes: 0,
+            seconds: 5,
         },
     },
     schedule: [],
