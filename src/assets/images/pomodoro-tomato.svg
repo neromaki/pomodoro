@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="307px" height="344px" viewBox="0 0 307 344" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
     <title>Pomodoro Logo</title>
     <desc>Created with Sketch.</desc>
     <defs>
@@ -21,9 +21,9 @@
                     <mask id="mask-2" fill="white">
                         <use xlink:href="#path-1"></use>
                     </mask>
-                    <use id="Mask" fill="#DC785F" xlink:href="#path-1"></use>
+                    <use id="Mask" fill="#CC6449" xlink:href="#path-1"></use>
                     <rect fill="#DC785F" mask="url(#mask-2)" x="152" y="0" width="152" height="317.217391"></rect>
-                    <rect fill-opacity="0.13" fill="#6823BC" mask="url(#mask-2)" x="152" y="0" width="152" height="317.217391"></rect>
+                    <rect fill-opacity="0.205134737" fill="#310A4F" mask="url(#mask-2)" x="152" y="0" width="152" height="317.217391"></rect>
                 </g>
             </g>
         </g>

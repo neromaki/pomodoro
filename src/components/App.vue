@@ -73,6 +73,7 @@ export default {
         background: white;
         border-top: 4px solid #dc775e;
         z-index: 5;
+        box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1);
 
         @media(min-width: 1200px) {
             padding: 10px 30px;

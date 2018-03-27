@@ -76,7 +76,7 @@ export default {
 
 <style lang="scss" scoped>
     $pie-color: #dd785f;
-    $size: 30em;
+    $size: 40em;
 
     @mixin size($w, $h){
       height: $h;
@@ -160,7 +160,7 @@ export default {
 
       .shadow {
         @include size(100%, 100%);
-        border: $size / $progress-division solid rgba(247, 248, 248, .5);
+        border: $size / $progress-division solid rgba(237, 237, 237, .75);
         border-radius: 50%;
       }
 

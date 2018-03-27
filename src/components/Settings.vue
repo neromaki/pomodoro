@@ -3,10 +3,6 @@
         <div class="settings modal">
             <section class="settings__durations">
                 <h2>Customise timers</h2>
-                <div>
-                    <label>title</label>
-                    <label>duration</label>
-                </div>
                 <div class="settings__durations__list" v-for="(timer, key) in userDurations">
                     <input type="text" id="title" v-model="timer.title" />
                     <div>
@@ -133,8 +129,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$red: #dc775f;
-$red-dark: #ce6d6c;
+$red: #CC6449;
+$red-dark: #B9615B;
 $blue: #6bc2d6;
 $blue-dark: #5b9ec2;
 
@@ -146,6 +142,8 @@ $blue-dark: #5b9ec2;
         padding: 10px 20px;
         box-shadow: 0 4px 0 darken($blue-dark, 10%);
         cursor: pointer;
+        font-size: 1em;
+        border-radius: 3px;
 
         &:hover {
             background: darken($blue-dark, 10%);
@@ -177,9 +175,9 @@ $blue-dark: #5b9ec2;
                 > div {
                     display: flex;
 
-                    &:nth-child(2),
                     &:last-child {
                         justify-content: space-between;
+                        align-items: center;
                     }
 
                     > div {
@@ -191,7 +189,7 @@ $blue-dark: #5b9ec2;
             .duration--wrapper {
                 position: relative;
                 &:first-child {
-                    margin-right: 5px;
+                    margin-right: 10px;
                 }
 
                 button {
@@ -201,14 +199,40 @@ $blue-dark: #5b9ec2;
                     padding: 6px 4px;
                     background: $red;
                     border: none;
-                    border-bottom: 4px solid $red-dark;
+                    outline: none;
+                    cursor: pointer;
 
+                    &:hover,
+                    &:focus
+                    &:active {
+                        outline: none;
+                    }
+
+                    &:hover,
+                    &:active {
+                        background: darken($red, 5%);
+                    }
+
+                    &.increment {
+                        padding: 5px 4px;
+                        border-top-right-radius: 5px;
+                        border-bottom: 1px solid $red-dark;
+                        z-index: 1;
+                        &:active {
+                            top: 1px;
+                        }
+                    }
                     &.decrement {
+                        z-index: 2;
                         top: initial;
                         bottom: 0;
                         border: none;
                         padding-bottom: 4px;
                         border-bottom: 4px solid $red-dark;
+                        border-bottom-right-radius: 5px;
+                        &:active {
+                            bottom: -1px;
+                        }
                     }
 
                     svg {
@@ -224,9 +248,13 @@ $blue-dark: #5b9ec2;
                     padding: 10px 15px;
                     font-size: 1em;
                     border: none;
-                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) inset,
+                    box-shadow: 0px 2px 0 rgba(0, 0, 0, 0.2) inset;
+                    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) inset,
                     2px 0px 4px rgba(255, 255, 255, 0.2) inset,
-                    -2px 0px 4px rgba(255, 255, 255, 0.8) inset;
+                    -2px 0px 4px rgba(255, 255, 255, 0.8) inset; */
+
+                    border-radius: 5px;
+                    background: darken(white, 5%);
                 }
 
                 > input {
