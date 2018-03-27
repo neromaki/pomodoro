@@ -70,6 +70,7 @@ export default {
                     this.$store.dispatch('SCHEDULE_CREATE');
                     this.$store.dispatch('TIMER_INIT');
                     this.$store.dispatch('MODAL_TOGGLE');
+                    this.$store.dispatch('TOAST_TRIGGER', 'Timers updated successfully.');
                 })
                 .catch((e) => {
                     // TODO: add fail condition
@@ -82,6 +83,7 @@ export default {
                     this.$store.dispatch('SCHEDULE_CREATE');
                     this.$store.dispatch('TIMER_INIT');
                     this.$store.dispatch('MODAL_TOGGLE');
+                    this.$store.dispatch('TOAST_TRIGGER', 'Timers reset to defaults.');
                 });
         },
         validateMinutes(key) {
@@ -131,22 +133,22 @@ export default {
 <style lang="scss" scoped>
 $red: #CC6449;
 $red-dark: #B9615B;
-$blue: #6bc2d6;
+$blue: #46aae0;
 $blue-dark: #5b9ec2;
 
     .save-durations {
-        background: $blue-dark;
+        background: $blue;
         color: white;
         border: none;
         font-size: .9em;
-        padding: 10px 20px;
-        box-shadow: 0 4px 0 darken($blue-dark, 10%);
+        padding: 10px 40px;
+        box-shadow: 0 4px 0 darken($blue, 8%);
         cursor: pointer;
         font-size: 1em;
         border-radius: 3px;
 
         &:hover {
-            background: darken($blue-dark, 10%);
+            background: darken($blue, 5%);
         }
     }
 
@@ -169,6 +171,12 @@ $blue-dark: #5b9ec2;
             h1,
             h2 {
                 margin-top: 0;
+            }
+
+            a {
+                &:visited {
+                    color: lighten(black, 20%);
+                }
             }
 
             &.settings__durations {
@@ -288,5 +296,9 @@ $blue-dark: #5b9ec2;
         left: 0;
         right: 0;
         background: rgba(0, 0, 0, .75);
+    }
+
+    @keyframes toast-cycle {
+
     }
 </style>

@@ -139,6 +139,10 @@ const actions = {
         commit('USER_PREFERENCES_SET', payload);
     },
 
+    TOAST_TRIGGER({ commit }, payload) {
+        commit('TOAST_TRIGGER', payload);
+    },
+
     PLAY_SOUND({ commit }) {
         // eslint-disable-next-line
         const audio = new Audio(require('../assets/glass-bell.mp3'));

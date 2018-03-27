@@ -89,6 +89,14 @@ const mutations = {
     MODAL_TOGGLE(store) {
         store.app.modal = !store.app.modal;
     },
+
+    TOAST_TRIGGER(store, payload) {
+        store.app.toast.message = payload;
+        store.app.toast.active = true;
+        setTimeout(() => {
+            store.app.toast.active = false;
+        }, 3000);
+    },
 };
 
 export default mutations;

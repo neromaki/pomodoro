@@ -7,6 +7,10 @@ const state = {
     app: {
         loading: false,
         modal: false,
+        toast: {
+            active: false,
+            message: '',
+        },
     },
     timer: {
         duration: 0,

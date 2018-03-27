@@ -11,6 +11,7 @@ const getters = {
     durations: s => s.durations,
     schedule: s => s.schedule,
     progressStyle: s => s.progressStyle,
+    toast: s => s.app.toast,
 };
 
 export default getters;

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div :class="['toast', (toast.active ? 'active' : '')]">{{ toast.message }}</div>
         <header>
             <div class="brand">
                 <img src="../assets/images/pomodoro-tomato.svg" class="logo" alt="Pomodoro logo" />
@@ -36,6 +37,7 @@ export default {
     computed: {
         ...mapGetters({
             modal: 'appModal',
+            toast: 'toast',
         }),
     },
     components: {
@@ -55,6 +57,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .toast {
+        background: #bbf5bb;
+        position: absolute;
+        top: -50px;
+        left: 50%;
+        z-index: 10;
+        color: hsla(120, 74%, 35%, 1);
+        padding: 20px 20px 10px;
+        transform: translate(-50%, 0);
+        transition: top cubic-bezier(0.42, 0, 0.21, 1.7) .4s;
+
+        &.active {
+            top: -10px;
+        }
+    }
+
     main {
         display: flex;
         align-items: center;
