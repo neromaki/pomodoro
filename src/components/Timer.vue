@@ -99,8 +99,14 @@ export default {
 
       margin: 0 auto;
       position: relative;
-      // border-radius: 50%;
-      // background: white;
+
+      @media screen and (max-height: 750px), screen and (max-width: 720px) {
+          // @include size($size/1.5, $size/1.5);
+      }
+
+      @media screen and (max-height: 550px), screen and (max-width: 470px) {
+            // @include size($size/1.8, $size/1.8);
+      }
 
       &:nth-child(3n+1) {
         clear: both;
@@ -113,6 +119,14 @@ export default {
         position: absolute;
         top: 0;
 
+        @media screen and (max-height: 750px), screen and (max-width: 720px) {
+            // clip: rect(0, $size / 1.8, $size / 1.8, $size / 2);
+        }
+
+        @media screen and (max-height: 550px), screen and (max-width: 470px) {
+
+        }
+
         .half-circle {
           @include size(100%, 100%);
           border: $size / $progress-division solid $pie-color;
@@ -122,6 +136,11 @@ export default {
           position: absolute;
           top: 0;
           // transition: transform ease-in-out .2s;
+
+          @media screen and (max-height: 750px), screen and (max-width: 720px) {
+              // border: ($size / 2) / $progress-division solid $pie-color;
+              // clip: rect(0, $size / 2, ($size / 1.8), 0);
+          }
         }
       }
 
@@ -141,6 +160,11 @@ export default {
         top: 46%;
         transform: translate(-50%, -50%);
         z-index: 1;
+
+        @media screen and (max-height: 750px), screen and (max-width: 720px) {
+            // font-size: $font-size / 1.5;
+            // line-height: $font-size / 1.5;
+        }
       }
 
       .smaller {
@@ -156,12 +180,19 @@ export default {
         display: block;
         transform: translate(-50%, -50%);
         z-index: 1;
+
+        @media screen and (max-height: 750px), screen and (max-width: 720px) {
+            // font-size: $size / 25;
+        }
       }
 
       .shadow {
         @include size(100%, 100%);
         border: $size / $progress-division solid rgba(237, 237, 237, .75);
         border-radius: 50%;
+        @media screen and (max-height: 750px), screen and (max-width: 720px) {
+            // border: ($size / 2) / $progress-division solid rgba(237, 237, 237, .75);
+        }
       }
 
       .pie-background {

@@ -4,7 +4,7 @@
         <header>
             <div class="brand">
                 <img src="../assets/images/pomodoro-tomato.svg" class="logo" alt="Pomodoro logo" />
-                <!-- <h1>pomodoro</h1> -->
+                <h1>pomodoro</h1>
             </div>
 
             <button class="toggle-settings" @click="toggleSettings()">
@@ -110,6 +110,7 @@ export default {
 
         h1 {
             font-family: Lato, sans-serif;
+            font-weight: 400;
             font-size: 2em;
             color: lighten(#000, 15%);
             margin-left: 15px;
