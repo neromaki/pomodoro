@@ -90,6 +90,7 @@ const actions = {
             commit('TIMER_UPDATE', {
                 time: store.state.timer.time - 1,
             });
+            document.title = `(${store.state.timer.output}) - ${store.state.timer.current.title}`;
         } else if (store.state.timer.time <= 0) {
             store.dispatch('TIMER_NEXT');
         }
@@ -100,6 +101,7 @@ const actions = {
         commit('TIMER_CLEAR');
         commit('SCHEDULE_PULL');
         const next = _.first(store.state.schedule);
+
         if (next) {
             commit('TIMER_UPDATE', {
                 current: next,

@@ -32,6 +32,7 @@ const mutations = {
 
     TIMER_CLEAR(store, payload) {
         window.clearInterval(store.timer.timer);
+        document.title = 'pomodoro';
     },
     TIMER_UPDATE_STYLE(store) {
         store.progressStyle.pie = (store.timer.percent > 50 ? 'clip: rect(auto, auto, auto, auto);' : '');
