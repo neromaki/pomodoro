@@ -13,8 +13,6 @@ const actions = {
     },
 
     TIMER_INIT({ commit }) {
-        store.dispatch('USER_DURATIONS_GET');
-        store.dispatch('SCHEDULE_CREATE');
         const first = _.first(store.state.schedule);
         const { duration } = first;
         commit('TIMER_UPDATE', {

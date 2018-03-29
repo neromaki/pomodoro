@@ -69,6 +69,8 @@ export default {
         }
     },
     mounted() {
+        this.$store.dispatch('USER_DURATIONS_GET');
+        this.$store.dispatch('SCHEDULE_CREATE');
         this.$store.dispatch('TIMER_INIT');
     },
 };
