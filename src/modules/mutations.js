@@ -5,10 +5,16 @@
 
 // Import Vue and requirements
 import Cookie from 'js-cookie';
-// import state from './state';
 
 const mutations = {
     // APP
+    APP_INIT(store) {
+        _.each(store.durations, (duration, key) => {
+            duration.minutes = duration.defaults.minutes;
+            duration.seconds = duration.defaults.seconds;
+        });
+    },
+
     TIMER_INIT(store) {
         store.timer.duration = 0;
         store.timer.time = '';
@@ -36,11 +42,11 @@ const mutations = {
 
     SCHEDULE_CREATE(store) {
         store.schedule = [
-            store.durations.pomodoro,
+            store.durations.focus,
             store.durations.short_break,
-            store.durations.pomodoro,
+            store.durations.focus,
             store.durations.short_break,
-            store.durations.pomodoro,
+            store.durations.focus,
             store.durations.long_break,
         ];
     },
@@ -73,7 +79,7 @@ const mutations = {
             defaultDurations[key] = object;
             defaultDurations[key].title = key.replace('_', ' ');
             store.durations[key].title = key.replace('_', ' ');
-            store.durations[key].duration = (store.durations[key].minutes * 60) + store.durations[key].seconds;
+            store.durations[key].duration = (store.durations[key].defaults.minutes * 60) + store.durations[key].defaults.seconds;
         });
         Cookie.set('user_durations', defaultDurations);
     },

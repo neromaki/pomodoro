@@ -52,7 +52,9 @@ export default {
             this.$store.dispatch('MODAL_TOGGLE');
         },
     },
-    created() {},
+    created() {
+        this.$store.dispatch('APP_INIT');
+    },
 };
 </script>
 

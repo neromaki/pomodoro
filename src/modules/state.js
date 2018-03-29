@@ -27,23 +27,35 @@ const state = {
         right: '',
     },
     durations: {
-        pomodoro: {
-            title: 'pomodoro',
+        focus: {
+            title: 'focus',
             duration: 0,
             minutes: 0,
-            seconds: 8,
+            seconds: 0,
+            defaults: {
+                minutes: 0,
+                seconds: 8,
+            },
         },
         short_break: {
             title: 'short break',
             duration: 0,
             minutes: 0,
-            seconds: 3,
+            seconds: 0,
+            defaults: {
+                minutes: 0,
+                seconds: 3,
+            },
         },
         long_break: {
             title: 'long break',
             duration: 0,
             minutes: 0,
-            seconds: 5,
+            seconds: 0,
+            defaults: {
+                minutes: 0,
+                seconds: 8,
+            },
         },
     },
     schedule: [],

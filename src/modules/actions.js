@@ -8,6 +8,10 @@ import store from './store';
 
 // All of the app's actions
 const actions = {
+    APP_INIT({ commit }) {
+        commit('APP_INIT');
+    },
+
     TIMER_INIT({ commit }) {
         store.dispatch('USER_DURATIONS_GET');
         store.dispatch('SCHEDULE_CREATE');
