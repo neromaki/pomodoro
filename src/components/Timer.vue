@@ -79,6 +79,8 @@ export default {
 <style lang="scss" scoped>
     $pie-color: #dd785f;
     $size: 40em;
+    $size_tab: $size / 1.5;
+    $size_mob: $size / 1.75;
 
     @mixin size($w, $h){
       height: $h;
@@ -103,11 +105,11 @@ export default {
       position: relative;
 
       @media screen and (max-height: 750px), screen and (max-width: 720px) {
-          // @include size($size/1.5, $size/1.5);
+          @include size($size_tab, $size_tab);
       }
 
       @media screen and (max-height: 550px), screen and (max-width: 470px) {
-            // @include size($size/1.8, $size/1.8);
+            @include size($size_mob, $size_mob);
       }
 
       &:nth-child(3n+1) {
@@ -122,11 +124,13 @@ export default {
         top: 0;
 
         @media screen and (max-height: 750px), screen and (max-width: 720px) {
-            // clip: rect(0, $size / 1.8, $size / 1.8, $size / 2);
+            @include size($size_tab, $size_tab);
+            clip: rect(0, $size_tab, $size_tab, $size_tab / 2);
         }
 
         @media screen and (max-height: 550px), screen and (max-width: 470px) {
-
+            @include size($size_mob, $size_mob);
+            clip: rect(0, $size_mob, $size_mob, $size_mob / 2);
         }
 
         .half-circle {
@@ -140,8 +144,13 @@ export default {
           // transition: transform ease-in-out .2s;
 
           @media screen and (max-height: 750px), screen and (max-width: 720px) {
-              // border: ($size / 2) / $progress-division solid $pie-color;
-              // clip: rect(0, $size / 2, ($size / 1.8), 0);
+              border: $size_tab / $progress-division solid $pie-color;
+              clip: rect(0, $size_tab / 2, $size_tab, 0);
+          }
+
+          @media screen and (max-height: 550px), screen and (max-width: 470px) {
+              border: $size_mob / $progress-division solid $pie-color;
+              clip: rect(0, $size_mob / 2, $size_mob, 0);
           }
         }
       }
@@ -164,8 +173,12 @@ export default {
         z-index: 1;
 
         @media screen and (max-height: 750px), screen and (max-width: 720px) {
-            // font-size: $font-size / 1.5;
-            // line-height: $font-size / 1.5;
+            font-size: $font-size / 1.5;
+            line-height: $font-size / 1.5;
+        }
+        @media screen and (max-height: 550px), screen and (max-width: 470px) {
+            font-size: $font-size / 1.75;
+            line-height: $font-size / 1.75;
         }
       }
 
@@ -184,7 +197,10 @@ export default {
         z-index: 1;
 
         @media screen and (max-height: 750px), screen and (max-width: 720px) {
-            // font-size: $size / 25;
+            font-size: $size / 25;
+        }
+        @media screen and (max-height: 550px), screen and (max-width: 470px) {
+            font-size: $size / 27;
         }
       }
 
@@ -193,7 +209,10 @@ export default {
         border: $size / $progress-division solid rgba(237, 237, 237, .75);
         border-radius: 50%;
         @media screen and (max-height: 750px), screen and (max-width: 720px) {
-            // border: ($size / 2) / $progress-division solid rgba(237, 237, 237, .75);
+            border: $size_tab / $progress-division solid rgba(237, 237, 237, .75);
+        }
+        @media screen and (max-height: 550px), screen and (max-width: 470px) {
+            border: $size_mob / $progress-division solid rgba(237, 237, 237, .75);
         }
       }
 
