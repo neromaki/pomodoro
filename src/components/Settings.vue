@@ -147,13 +147,16 @@ $blue-dark: #5b9ec2;
         font-size: 1em;
         border-radius: 3px;
 
+        @media screen and (max-width: 550px) {
+            margin-bottom: 35px;
+        }
+
         &:hover {
             background: darken($blue, 5%);
         }
     }
 
     .modal {
-        // display: none;
         z-index: 8;
         position: relative;
         background: white;
@@ -162,6 +165,13 @@ $blue-dark: #5b9ec2;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+
+        @media screen and (max-width: 550px) {
+            position: absolute;
+            top: 30px;
+            transform: translate(-50%, 0);
+            margin-bottom: 30px;
+        }
 
         &.active {
             display: block;
@@ -190,6 +200,16 @@ $blue-dark: #5b9ec2;
 
                     > div {
                         display: flex;
+                    }
+
+                    @media screen and (max-width: 550px) {
+                        flex-direction: column;
+                    }
+
+                    > input {
+                        @media screen and (max-width: 550px) {
+                            margin-bottom: 10px;
+                        }
                     }
                 }
             }
@@ -252,21 +272,25 @@ $blue-dark: #5b9ec2;
             .settings__durations__list {
                 margin-bottom: 15px;
 
+                @media screen and (max-width: 550px) {
+                    margin-bottom: 35px;
+                }
+
                 input {
                     padding: 10px 15px;
                     font-size: 1em;
                     border: none;
                     box-shadow: 0px 2px 0 rgba(0, 0, 0, 0.2) inset;
-                    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2) inset,
-                    2px 0px 4px rgba(255, 255, 255, 0.2) inset,
-                    -2px 0px 4px rgba(255, 255, 255, 0.8) inset; */
-
                     border-radius: 5px;
                     background: darken(white, 5%);
                 }
 
                 > input {
                     margin-right: 25px;
+
+                    @media screen and (max-width: 550px) {
+                        margin-right: 0;
+                    }
                 }
 
                 .duration--minutes,

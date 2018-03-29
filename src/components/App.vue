@@ -61,17 +61,17 @@ export default {
 <style lang="scss" scoped>
     .toast {
         background: #bbf5bb;
-        position: absolute;
-        top: -50px;
+        position: fixed;
+        top: -100%;
         left: 50%;
         z-index: 10;
         color: hsla(120, 74%, 35%, 1);
-        padding: 20px 20px 10px;
+        padding: 40px 20px 10px;
         transform: translate(-50%, 0);
-        transition: top cubic-bezier(0.42, 0, 0.21, 1.7) .4s;
+        transition: top cubic-bezier(0.42, 0, 0.15, 1.36) .4s;
 
         &.active {
-            top: -10px;
+            top: -30px;
         }
     }
 
