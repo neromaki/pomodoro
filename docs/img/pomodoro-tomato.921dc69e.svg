@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="307px" height="344px" viewBox="0 0 307 344" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>Pomodoro Logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="152" cy="152" r="152"></circle>
+    </defs>
+    <g id="Pomodoro-Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Tomato" transform="translate(1.000000, 1.000000)">
+            <g id="Group">
+                <polygon id="Triangle" fill="#68C167" points="210.727273 6.90909091 209.042438 76 152 42.9201407"></polygon>
+                <polygon id="Triangle" fill="#68C167" points="93.2727273 6.90909091 152 42.9201407 94.9575617 76"></polygon>
+                <rect id="Rectangle-3" fill="#68C167" x="138.181818" y="0" width="27.6363636" height="51.8181818"></rect>
+                <rect id="Rectangle-3-Copy" fill="#68C167" x="152" y="0" width="13.8181818" height="51.8181818"></rect>
+                <g id="Group-2" transform="translate(152.000000, 0.000000)" fill="#511389">
+                    <polygon id="Triangle" fill-opacity="0.125509511" points="58.7272727 6.90909091 57.0424383 76 -4.26325641e-14 42.9201407"></polygon>
+                    <rect id="Rectangle-3-Copy" fill-opacity="0.13" x="0" y="0" width="13.8181818" height="51.8181818"></rect>
+                </g>
+                <g id="Rectangle-2" transform="translate(0.000000, 38.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#CC6449" xlink:href="#path-1"></use>
+                    <rect fill="#DC785F" mask="url(#mask-2)" x="152" y="0" width="152" height="317.217391"></rect>
+                    <rect fill-opacity="0.205134737" fill="#310A4F" mask="url(#mask-2)" x="152" y="0" width="152" height="317.217391"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
