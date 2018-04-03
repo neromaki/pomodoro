@@ -7,19 +7,19 @@
 // Import Vue stuff
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VueRouter from 'vue-router';
+// import VueRouter from 'vue-router';
 import 'promise-polyfill/src/polyfill';
 
 // Import App component that contains all other components in the app
 import App from './components/App.vue';
 
 // Import app state, routes etc
-import router from './modules/routes';
+// import router from './modules/routes';
 import store from './modules/store';
 
 // Set Vue to use aforementioned stuff
 Vue.use(Vuex);
-Vue.use(VueRouter);
+// Vue.use(VueRouter);
 
 // Require lodash globally
 window._ = require('lodash');
@@ -40,7 +40,7 @@ window.log = (message) => {
 // eslint-disable-next-line
 const app = new Vue({
     store,
-    router,
+    // router,
     el: '#app',
     components: {
         App,

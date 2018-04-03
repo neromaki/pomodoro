@@ -33,8 +33,8 @@ const state = {
             minutes: 0,
             seconds: 0,
             defaults: {
-                minutes: 0,
-                seconds: 8,
+                minutes: 25,
+                seconds: 0,
             },
         },
         short_break: {
@@ -43,8 +43,8 @@ const state = {
             minutes: 0,
             seconds: 0,
             defaults: {
-                minutes: 0,
-                seconds: 3,
+                minutes: 5,
+                seconds: 0,
             },
         },
         long_break: {
@@ -53,8 +53,8 @@ const state = {
             minutes: 0,
             seconds: 0,
             defaults: {
-                minutes: 0,
-                seconds: 8,
+                minutes: 15,
+                seconds: 0,
             },
         },
     },

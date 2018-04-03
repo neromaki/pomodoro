@@ -16,7 +16,7 @@
         </header>
 
         <main>
-            <router-view></router-view>
+            <timer></timer>
             <settings v-if="this.modal"></settings>
         </main>
 
